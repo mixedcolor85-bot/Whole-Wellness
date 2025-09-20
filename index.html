@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Gradient Wellness</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: 'Arial', sans-serif; background: #f5f5f5; color: #fff;}
+
+    header {
+        text-align: center;
+        padding: 3rem 1rem;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #ffdd00, #ff6a00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+
+    header p {
+        font-size: 1.2rem;
+        background: linear-gradient(135deg, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+
+    section {padding: 4rem 1rem; text-align: center;}
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #ff512f, #dd2476);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: bold;
+    }
+
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .card {
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        padding: 2rem;
+        border-radius: 15px;
+        width: 200px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .card i {font-size: 2rem; margin-bottom: 1rem; display: block;}
+    .card p {font-size: 1.1rem; line-height: 1.4;}
+
+    /* Different gradients for different sections */
+    #strength .card {background: linear-gradient(135deg, #11998e, #38ef7d);}
+    #intake .card {background: linear-gradient(135deg, #fc4a1a, #f7b733);}
+    #recovery .card {background: linear-gradient(135deg, #654ea3, #eaafc8);}
+
+    /* Buttons */
+    .add-btn {
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        border: none;
+        padding: 0.8rem 1.5rem;
+        margin: 2rem 0;
+        border-radius: 10px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(135deg, #00f260, #0575e6);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .add-btn:hover {
+        transform: scale(1.05);
+        text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Interactive Gradient Wellness</h1>
+    <p>Mindset | Strength | Intake | Recovery</p>
+</header>
+
+<!-- Mindset Section -->
+<section id="mindset">
+    <h2 class="section-title">Mindset</h2>
+    <button class="add-btn" data-section="mindset">Add Mindset Card</button>
+    <div class="cards" id="mindset-cards">
+        <div class="card">
+            <i class="fas fa-brain"></i>
+            <p>Mindset</p>
+        </div>
+    </div>
+</section>
+
+<!-- Strength Section -->
+<section id="strength">
+    <h2 class="section-title">Strength</h2>
+    <button class="add-btn" data-section="strength">Add Strength Card</button>
+    <div class="cards" id="strength-cards">
+        <div class="card">
+            <i class="fas fa-dumbbell"></i>
+            <p>Strength</p>
+        </div>
+    </div>
+</section>
+
+<!-- Intake Section -->
+<section id="intake">
+    <h2 class="section-title">Intake</h2>
+    <button class="add-btn" data-section="intake">Add Intake Card</button>
+    <div class="cards" id="intake-cards">
+        <div class="card">
+            <i class="fas fa-utensils"></i>
+            <p>Intake</p>
+        </div>
+    </div>
+</section>
+
+<!-- Recovery Section -->
+<section id="recovery">
+    <h2 class="section-title">Recovery</h2>
+    <button class="add-btn" data-section="recovery">Add Recovery Card</button>
+    <div class="cards" id="recovery-cards">
+        <div class="card">
+            <i class="fas fa-bed"></i>
+            <p>Recovery</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    const sectionCards = {
+        mindset: [
+            {icon:'fas fa-spa', text:'Mindfulness'},
+            {icon:'fas fa-bolt', text:'Motivation'},
+            {icon:'fas fa-running', text:'Mobility'}
+        ],
+        strength: [
+            {icon:'fas fa-balance-scale', text:'Stability'},
+            {icon:'fas fa-hand-rock', text:'Simple'}
+        ],
+        intake: [
+            {icon:'fas fa-arrow-up', text:'Improve'},
+            {icon:'fas fa-puzzle-piece', text:'Integration'},
+            {icon:'fas fa-lightbulb', text:'Innovation'}
+        ],
+        recovery: [
+            {icon:'fas fa-shield-alt', text:'Resilience'},
+            {icon:'fas fa-hourglass-half', text:'Remain'}
+        ]
+    };
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.getAttribute('data-section');
+            const container = document.getElementById(`${section}-cards`);
+            const cardsToAdd = sectionCards[section];
+
+            cardsToAdd.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<i class="${item.icon}"></i><p>${item.text}</p>`;
+                container.appendChild(card);
+            });
+
+            sectionCards[section] = [];
+        });
+    });
+</script>
+
+</body>
+</html>
