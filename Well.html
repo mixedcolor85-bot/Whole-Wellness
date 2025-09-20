@@ -11,8 +11,6 @@
 
 /* CSS 변수 설정 */
 :root {
-    --bg-gradient-main: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-    
     /* 구글 I/O 스타일 색상 팔레트 */
     --color-0: #f0f8ff; /* Alice Blue */
     --color-1: #e0b0ff; /* Light Lilac */
@@ -43,24 +41,14 @@
 }
 
 * {margin:0; padding:0; box-sizing:border-box;}
+
+/* body 태그에 전체 배경 적용 */
 body {
     font-family: 'Poppins', sans-serif;
-    background: var(--bg-gradient-main);
     color: #333;
     overflow-x: hidden;
     min-height: 100vh;
-}
-
-/* Hero Section */
-.hero {
-    position: relative;
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    color: #fff;
+    
     /* 구글 I/O 스타일 배경 */
     background: 
         radial-gradient(circle at 10% 20%, var(--color-0) 0%, rgba(255,255,255,0) 30%),
@@ -80,6 +68,19 @@ body {
 @keyframes moving-gradient {
     0% { background-position: 0% 0%; }
     100% { background-position: 100% 100%; }
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: #fff;
+    background: none; /* body의 배경을 사용하므로 hero의 배경은 제거 */
 }
 
 .hero h1 {
@@ -307,6 +308,38 @@ section {
     box-shadow: 0 0 15px 5px rgba(251, 194, 235, 0.7);
     transition: all 0.5s ease;
 }
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+    .hero {
+        height: 50vh;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    section {
+        padding: 2rem 0.5rem;
+        margin: 1rem auto;
+    }
+    .section-title {
+        font-size: 1.5rem;
+    }
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .card {
+        width: 90%;
+        margin-bottom: 1.5rem;
+    }
+    .modal-content {
+        width: 95%;
+        padding: 1rem;
+    }
+}
 </style>
 </head>
 <body>
@@ -521,11 +554,10 @@ const modalText = document.getElementById('modalText');
 const modalClose = document.getElementById('modalClose');
 const cards = document.querySelectorAll('.card');
 
-let lastClickedCard = null; // 마지막으로 클릭된 카드를 저장하는 변수
+let lastClickedCard = null;
 
 cards.forEach(card => {
     card.addEventListener('click', () => {
-        // 이전에 클릭된 카드의 강조 효과를 제거
         if (lastClickedCard) {
             lastClickedCard.classList.remove('active-card-feedback');
         }
@@ -535,18 +567,17 @@ cards.forEach(card => {
         modalTitle.textContent = title;
         modalText.textContent = detail;
         modal.classList.add('active');
-        lastClickedCard = card; // 현재 클릭된 카드를 저장
+        lastClickedCard = card;
     });
 });
 
 modalClose.addEventListener('click', () => {
     modal.classList.remove('active');
-    // 모달이 닫힐 때 마지막으로 클릭된 카드에 강조 효과 추가
     if (lastClickedCard) {
         lastClickedCard.classList.add('active-card-feedback');
         setTimeout(() => {
             lastClickedCard.classList.remove('active-card-feedback');
-        }, 800); // 0.8초 후 효과 제거
+        }, 800);
     }
 });
 
